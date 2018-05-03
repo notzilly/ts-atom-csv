@@ -1,10 +1,14 @@
-function greeter(person) {
-    var a = 5;
-    var b = 123;
-    var c = a + b;
-    return "Hello, " + person;
-}
-var user = "Jane User";
 window.onload = function () {
-    // document.body.innerHTML = greeter(user);
+    var filepicker = document.getElementById('filepicker'); // Filepicker
+    filepicker.addEventListener('change', function (e) {
+        var files = e.target.files;
+        var filelist = document.getElementById('filelist');
+        console.log(files);
+        for (var i = 0; i < files.length; i++) { // Printa na tela os arquivos
+            var file = files[i];
+            var item = document.createElement("li");
+            item.innerHTML = file.webkitRelativePath;
+            filelist.appendChild(item);
+        }
+    }, false);
 };
