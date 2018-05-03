@@ -1,0 +1,9 @@
+{
+  "name": "ts-atom-csv",
+  "version": "1.0.0",
+  "description": "CSV Generator for AtoM",
+  "main": "built/main.js",
+  "author": "notzilly",
+  "dependencies": {},
+  "devDependencies": {}
+}
