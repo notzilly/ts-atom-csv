@@ -12,25 +12,40 @@ class Register { // Registro (linha) a ser inserida no csv
     }
 }
 
+class CSV { // CSV 
+    private header: string;
+    private registers: Register[];
+
+    constructor(registers: Register[]){
+        this.header = 'legacyId,parentId,qubitParentSlug,identifier,accessionNumber,title,levelOfDescription,extentAndMedium,repository,archivalHistory,acquisition,scopeAndContent,appraisal,accruals,arrangement,accessConditions,reproductionConditions,language,script,languageNote,physicalCharacteristics,findingAids,locationOfOriginals,locationOfCopies,relatedUnitsOfDescription,publicationNote,digitalObjectURI,generalNote,subjectAccessPoints,placeAccessPoints,nameAccessPoints,genreAccessPoints,descriptionIdentifier,institutionIdentifier,rules,descriptionStatus,levelOfDetail,revisionHistory,languageOfDescription,scriptOfDescription,sources,archivistNote,publicationStatus,physicalObjectName,physicalObjectLocation,physicalObjectType,alternativeIdentifiers,alternativeIdentifierLabels,eventDates,eventTypes,eventStartDates,eventEndDates,eventActors,eventActorHistories,culture\n';
+        this.registers = registers;
+    }
+
+    public getRegisters() : Register[] {
+        return this.registers;
+    }
+
+}
+
 let filepicker = document.getElementById('filepicker'); // Filepicker
 
 filepicker.addEventListener('change', (e) => { // Evento que mapeia cada nova seleção de diretório
 
     let files = (<HTMLInputElement>e.target).files; // Files do input
-    let pathArray: Array<string> = []; // Array que vai conter as strings dos caminhos dos arquivos
+    let pathArray: string[] = []; // Array que vai conter as strings dos caminhos dos arquivos
     
     for (let i = 0; i < files.length; i++) {  // Pega todos os caminhos relativos
         pathArray.push(files[i].webkitRelativePath);  // Coloca no array de strings pathArray
     }
     
-    let splitPathArray: Array<Array<string>> = [];  // Estrutura do diretório (array de array de strings)
+    let splitPathArray: string[][] = [];  // Estrutura do diretório (array de array de strings)
     
     pathArray.forEach((path) => {  // Faz o loop pelos caminhos dos arquivos
         splitPathArray.push(path.split('/'));  // Separa strings na '/'
     });
 
     let id: number = 1; // legacyId de cada nova inserção
-    let registerArray: Array<Register> = []; // Array de controle que contém objetos (futuras linhas do csv)
+    let registerArray: Register[] = []; // Array de controle que contém objetos (futuras linhas do csv)
 
     splitPathArray.forEach((path) => { // Loop em cada registro
         path.forEach((item, index, array) => { // Loop em cada subdivisão do registro
@@ -70,9 +85,9 @@ filepicker.addEventListener('change', (e) => { // Evento que mapeia cada nova se
         });
     });
 
-    let csv = new String('legacyId,parentId,qubitParentSlug,identifier,accessionNumber,title,levelOfDescription,extentAndMedium,repository,archivalHistory,acquisition,scopeAndContent,appraisal,accruals,arrangement,accessConditions,reproductionConditions,language,script,languageNote,physicalCharacteristics,findingAids,locationOfOriginals,locationOfCopies,relatedUnitsOfDescription,publicationNote,digitalObjectURI,generalNote,subjectAccessPoints,placeAccessPoints,nameAccessPoints,genreAccessPoints,descriptionIdentifier,institutionIdentifier,rules,descriptionStatus,levelOfDetail,revisionHistory,languageOfDescription,scriptOfDescription,sources,archivistNote,publicationStatus,physicalObjectName,physicalObjectLocation,physicalObjectType,alternativeIdentifiers,alternativeIdentifierLabels,eventDates,eventTypes,eventStartDates,eventEndDates,eventActors,eventActorHistories,culture\n');
+    let csv = new CSV(registerArray);
 
-    console.log(registerArray);
+    console.log(csv.getRegisters());
     console.log(splitPathArray);
 
 }, false);
