@@ -2,8 +2,18 @@
   "name": "ts-atom-csv",
   "version": "1.0.0",
   "description": "CSV Generator for AtoM",
-  "main": "built/main.js",
+  "main": "static/main.js",
   "author": "notzilly",
-  "dependencies": {},
-  "devDependencies": {}
+  "scripts": {
+    "serve": "http-server -a localhost -p 80",
+    "build": "browserify src/main.ts -p [ tsify --noImplicitAny ] > static/main.js",
+    "watch": "watchify src/main.ts -p [ tsify --noImplicitAny ] -d -o static/main.js -v"
+  },
+  "dependencies": {
+    "browserify": "^16.2.2",
+    "http-server": "^0.11.1",
+    "tsify": "^4.0.0",
+    "typescript": "^2.8.3",
+    "watchify": "^3.11.0"
+  }
 }
